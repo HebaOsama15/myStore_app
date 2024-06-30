@@ -10,17 +10,20 @@ import 'data_repo.dart';
 
 class OnlineDataRepo extends DataRepo{
   @override
-  Future<Map<String,dynamic>>getData({required String source, List<String>? columns}) async{
+  // Future<Map<String,dynamic>>
+  Future<List<dynamic>>
+  getData({required String source, List<String>? columns}) async{
     try{
       Response<String> serverResponse=await DioConnection.connect().get(source);
       //Response<String> serverResponse=await Dio().get(source);
 
-      Map<String,dynamic> content=jsonDecode(serverResponse.data!);
+      // Map<String,dynamic> 
+      List<dynamic> content=jsonDecode(serverResponse.data!);
      // print(content);
       return content;
     }catch(ex){
 
-      return {};
+      return [];
     }
 
   }

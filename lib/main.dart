@@ -1,11 +1,12 @@
 
+import 'package:e_commesce_app/core/feature/view/detial_product.dart';
 import 'package:e_commesce_app/core/feature/viewmodel/product_view_model.dart';
 import 'package:e_commesce_app/core/feature/viewmodel/user_veiw_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'core/component/theme_app/theme_app.dart';
+import 'core/feature/viewmodel/favorate_view_model.dart';
 import 'core/functions/loading_state.dart';
 import 'helper/shared_refrene_healper.dart';
 import 'route_management.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
   ChangeNotifierProvider(create: (ctx)=>LoginState()),
   ChangeNotifierProvider(create: (ctx)=>UserViewModel()),
   ChangeNotifierProvider(create: (ctx)=>ProdictViewModel()),
+  ChangeNotifierProvider(create: (ctx)=>FavorateModelView()),
     ]
     
      ,child:
@@ -48,21 +50,12 @@ class EntryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(  
-      locale:const Locale('ar', 'AR'),
-      localizationsDelegates:const  [
-    GlobalCupertinoLocalizations.delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ],
-  supportedLocales: const [
-    Locale('ar', 'AR'),
-    Locale('en', ''),
-  ],
+      
    theme: heba_light,   
      debugShowCheckedModeBanner: false,
 
       routes: {
-    // '/trip_detial': (context) => TripDetialPage(),
+    '/detial_product': (context) => DetialProduct(),
     // '/booking_detial': (context) => MyBookingDetialPage(),
     // '/booking_user' :(context) => const BookingUserPage(),
   },

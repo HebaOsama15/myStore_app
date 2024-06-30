@@ -10,33 +10,50 @@ class ProdictViewModel with ChangeNotifier{
   List<Product> _products=[];
   List<Product>get products => _products;
   
-   ProductViewModel(){
+   ProdictViewModel(){
     getAllProducts();
    }
 
-    
-   Future<List<Product>>loadData(DataRepo repo,String source)async{
-    //print(source);
-   try {
-     Map<String,dynamic>data=await repo.getData(source: source);
-   List<dynamic> d =data["data"];
-   List<Product>allProducts=d.map((e) => Product.fromJson(e)).toList();
-
-   return allProducts;
-
-   } catch (e) {
-     print(" loadData Product error is $e");
-     return [];
-   }
-
+Future<List<Product>> loadData(DataRepo repo, String source) async {
+  try {
+    List<dynamic> d = await repo.getData(source: source) ;
+    print("d is $d");
+    List<Product> allProducts = d.map((e) => Product.fromJson(e)).toList();
+    // Map<String, dynamic> data = await repo.getData(source: source) ;
+    // List<dynamic> d = data.values.toList();
+    // List<Product> allProducts =[];
+    //  data.map((e) => Product.fromJson(e)).toList();
+    // print("all product is: $allProducts");
+    return allProducts;
+  } catch (e) {
+    print(" loadData Product error is $e");
+    return [];
   }
+}
+
+    
+  //  Future<List<Product>>loadData(DataRepo repo,String source)async{
+  //   //print(source);
+  //  try {
+  //    Map<String,dynamic>data=await repo.getData(source: source);
+  //  List<dynamic> d =data["data"];
+  //  List<Product>allProducts=d.map((e) => Product.fromJson(e)).toList();
+  //  print("all product is: $d");
+  //  return allProducts;
+
+  //  } catch (e) {
+  //    print(" loadData Product error is $e");
+  //    return [];
+  //  }
+
+  // }
 
 
     Future<List<Product>> getAllProducts ()async{
    _products =  await loadData(OnlineDataRepo(), API_URL.PRODUCTS);
  
  notifyListeners();
-  // print("Products : ${_Products}");
+  print("Products : ${_products}");
  return _products;
 
 }

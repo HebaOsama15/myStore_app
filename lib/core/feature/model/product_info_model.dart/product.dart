@@ -7,7 +7,7 @@ class Product {
   String? description;
   String? category;
   String? image;
-  Rating? rating;
+  // Rating? rating;
 
   Product(
       {this.id,
@@ -16,17 +16,19 @@ class Product {
       this.description,
       this.category,
       this.image,
-      this.rating});
+      // this.rating
+      }
+      );
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    price = json['price'];
+    price = (json['price'] as num).toDouble();
     description = json['description'];
     category = json['category'];
     image = json['image'];
-    rating =
-        json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
+    // rating =
+    //     json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -37,9 +39,9 @@ class Product {
     data['description'] = this.description;
     data['category'] = this.category;
     data['image'] = this.image;
-    if (this.rating != null) {
-      data['rating'] = this.rating!.toJson();
-    }
+    // if (this.rating != null) {
+    //   // data['rating'] = this.rating!.toJson();
+    // }
     return data;
   }
 }

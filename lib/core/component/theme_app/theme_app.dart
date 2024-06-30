@@ -8,26 +8,26 @@ ThemeData heba_light = ThemeData(
  scaffoldBackgroundColor: primaryColor,
 
 
-  iconTheme: const IconThemeData(color: Colors.black),
+  iconTheme: const IconThemeData(color: primaryColor),
  textTheme:  const TextTheme(
   
   titleLarge: TextStyle(
-       fontFamily: "Samim",
+       fontFamily: "Lato",
        fontWeight: FontWeight.bold,
        fontSize: 22,
-       color: Colors.black
+       color: Colors.white
      ),
      titleMedium: TextStyle(
-       fontFamily: "Samim",
+       fontFamily: "Lato",
        fontWeight: FontWeight.bold,
        fontSize: 18,
-       color: Colors.black
+       color: Colors.white
      ),
      titleSmall: TextStyle(
-       fontFamily: "Samim",
+       fontFamily: "Lato",
        fontWeight: FontWeight.bold,
        fontSize: 14,
-       color: Colors.black54
+       color: Colors.white
      ),
  ),
 
@@ -45,7 +45,7 @@ ThemeData heba_light = ThemeData(
   //     borderRadius:BorderRadius.circular(8),
   //      ),
       textStyle:const TextStyle(
-         fontFamily: "Samim",
+         fontFamily: "Lato",
          color: Colors.white,
          fontWeight: FontWeight.bold,
          fontSize: 17,), 

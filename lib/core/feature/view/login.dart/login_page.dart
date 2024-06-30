@@ -49,7 +49,7 @@ class LoginPage extends StatelessWidget {
                           text: ' ما عندك حساب  ',
                           style: TextStyle(
                               fontSize: 18,
-                              fontFamily: 'Samim',
+                              fontFamily: 'Lato',
                               color: Colors.black45),
                           children: <TextSpan>[
                             TextSpan(
@@ -59,7 +59,7 @@ class LoginPage extends StatelessWidget {
                                   decorationColor: Colors.black45,
                                   fontSize: 16,
                                   // decorationStyle: TextDecorationStyle.double,
-                                  fontFamily: 'Samim'),
+                                  fontFamily: 'Lato'),
                             ),
                           ],
                         ),

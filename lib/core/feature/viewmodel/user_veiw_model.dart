@@ -22,19 +22,20 @@ class UserViewModel with ChangeNotifier{
    }
 
     
-   Future<List<User>>loadData(DataRepo repo,String source)async{
+  //  Future<List<User>>
+   loadData(DataRepo repo,String source)async{
     //print(source);
-   try {
-     Map<String,dynamic>data=await repo.getData(source: source);
-   List<dynamic> d =data["data"];
-   List<User>allUsers=d.map((e) => User.fromJson(e)).toList();
+  //  try {
+  //    Map<String,dynamic>data=await repo.getData(source: source);
+  //  List<dynamic> d =data["data"];
+  //  List<User>allUsers=d.map((e) => User.fromJson(e)).toList();
 
-   return allUsers;
+  //  return allUsers;
 
-   } catch (e) {
-     print(" loadData User error is $e");
-     return [];
-   }
+  //  } catch (e) {
+  //    print(" loadData User error is $e");
+  //    return [];
+  //  }
 
   }
    

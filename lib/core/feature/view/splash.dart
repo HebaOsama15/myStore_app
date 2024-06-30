@@ -1,5 +1,5 @@
 
-import 'package:e_commesce_app/core/feature/view/home_page.dart';
+import 'package:e_commesce_app/core/feature/view/navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../helper/shared_refrene_healper.dart';
@@ -51,7 +51,7 @@ _checkAuth(BuildContext context)async{
       if(SharedPrefsHelper.getString('token')==null) {
         return LoginPage();
       } else {
-        return HomePage();
+        return MasterPage();
       }
     }));
 }
