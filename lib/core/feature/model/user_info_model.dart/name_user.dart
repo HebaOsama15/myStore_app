@@ -11,9 +11,9 @@ class Name {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['firstname'] = this.firstname;
-    data['lastname'] = this.lastname;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['firstname'] = firstname;
+    data['lastname'] = lastname;
     return data;
   }
 }

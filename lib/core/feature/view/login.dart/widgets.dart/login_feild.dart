@@ -18,6 +18,7 @@ class LoginFeild extends StatelessWidget {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.3,
           child: ListView.separated(
+              primary: false,
               separatorBuilder: (context, index) =>
                   const SizedBox(
                     height: 20,
@@ -26,14 +27,14 @@ class LoginFeild extends StatelessWidget {
               itemBuilder: (context, index) {
                 List<Map<String, dynamic>> li = [
                   {
-                    "اسم المستخدم": const Icon(
+                    "User Name": const Icon(
                       Icons.person,
                       color: Colors.grey,
                       size: 20,
                     )
                   },
                   {
-                    " كلمة المرور": const Icon(
+                    "Password": const Icon(
                       Icons.password,
                       color: Colors.grey,
                       size: 20,

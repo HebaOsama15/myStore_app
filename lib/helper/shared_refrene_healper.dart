@@ -27,4 +27,6 @@ class SharedPrefsHelper {
   static Future<bool> removeString(String key)async{
     return await SharedPrefsHelper.instance.remove(key);
   }
+
+
 }

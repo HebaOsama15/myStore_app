@@ -20,19 +20,23 @@ class LoginTextFeild extends StatelessWidget {
       controller: controller,
       validator: validator,
       decoration: InputDecoration(
-        hintText: 'ادخل $lable',
-        label: Text(
-          lable,
-          style: Theme.of(context).textTheme.titleSmall,
+        // hintText: 'ُEnter $lable',
+        label: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Text(
+            lable,
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.black54),
+          ),
         ),
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(
           borderSide: BorderSide(
-            color: primaryColor,
+            color: secondColor.withOpacity(1),
           ),
           borderRadius: BorderRadius.circular(30),
         ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
       ),
     );
   }

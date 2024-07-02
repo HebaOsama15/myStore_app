@@ -21,9 +21,9 @@ class ImageSilverAppbar extends StatelessWidget {
       expandedHeight: MediaQuery.of(context).size.height * 0.5,
       floating: false,
       pinned: true,
-      leading: IconButton(icon: Icon(Icons.arrow_back, color: primaryColor,size: 30,), onPressed: (){Navigator.pop(context);},),
+      leading: IconButton(icon: const Icon(Icons.arrow_back, color: primaryColor,size: 30,), onPressed: (){Navigator.pop(context);},),
       actions: [
-        IconButton(onPressed: ()=> favorateProvider.toggleButtonColor(),
+        IconButton(onPressed: ()=> favorateProvider.toggleButtonColor(productPass),
          icon: Icon(favorateProvider.icon, color: Colors.red, 
         size: 30,))
       ],

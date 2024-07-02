@@ -21,7 +21,7 @@ class CircleButton extends StatelessWidget {
           height: 25.0,
           decoration: BoxDecoration(
             color: primaryColor,
-            borderRadius: BorderRadius.all( Radius.circular(15.0)),
+            borderRadius: const BorderRadius.all( Radius.circular(15.0)),
             border: Border.all(
               color: Colors.white70,
               width: 1.5,

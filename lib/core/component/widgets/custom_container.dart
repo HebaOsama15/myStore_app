@@ -1,9 +1,5 @@
 
-import 'package:e_commesce_app/core/feature/viewmodel/product_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
-
-import '../../constants/colors.dart';
 
 class CustomDownContainer extends StatelessWidget {
    CustomDownContainer({
@@ -12,12 +8,16 @@ class CustomDownContainer extends StatelessWidget {
     this.isImage = true,
     required this.width,
     required this.height,
+    this.child,
+    this.borderRadius,
   });
 
   String? image;
   bool isImage;
   double width;
   double height;
+  Widget? child;
+  BorderRadiusGeometry? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +31,13 @@ class CustomDownContainer extends StatelessWidget {
          fit: BoxFit.contain,
        ),
          color: Colors.white,
-          borderRadius:const BorderRadius.only(
+          borderRadius:borderRadius?? const BorderRadius.only(
            topLeft: Radius.circular(20),
            topRight: Radius.circular(20),
           ),
        ):null ,
       //  
-       child: Column(
-         mainAxisAlignment: MainAxisAlignment.start,
-         crossAxisAlignment: CrossAxisAlignment.end,
-         children: [
-           IconButton(onPressed: (){},
-            icon:const Icon(IconlyLight.heart, color: primaryColor,))
-         ],
-       )
+       child: child
                             );
   }
 }

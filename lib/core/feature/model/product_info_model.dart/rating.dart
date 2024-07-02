@@ -10,9 +10,9 @@ class Rating {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rate'] = this.rate;
-    data['count'] = this.count;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['rate'] = rate;
+    data['count'] = count;
     return data;
   }
 }

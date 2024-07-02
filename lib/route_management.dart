@@ -1,13 +1,16 @@
 
-import 'package:e_commesce_app/core/feature/view/cart_page.dart';
-import 'package:e_commesce_app/core/feature/view/detial_product.dart';
-import 'package:e_commesce_app/core/feature/view/favorate_page.dart';
-import 'package:e_commesce_app/core/feature/view/home_page.dart';
+import 'package:e_commesce_app/core/feature/view/pages/cart_page.dart';
+import 'package:e_commesce_app/core/feature/view/pages/detial_product.dart';
+import 'package:e_commesce_app/core/feature/view/pages/favorate_page.dart';
+import 'package:e_commesce_app/core/feature/view/pages/home_page.dart';
+import 'package:e_commesce_app/core/feature/view/pages/navigation_bar.dart';
+import 'package:e_commesce_app/core/feature/view/pages/pay_Page.dart';
 import 'package:flutter/material.dart';
 
 import 'core/errors/eror404.dart';
 import 'core/feature/view/login.dart/login_page.dart';
-import 'core/feature/view/splash.dart';
+import 'core/feature/view/pages/products_of_category_page.dart';
+import 'core/feature/view/pages/splash.dart';
 
 
 class RouteManager{
@@ -30,7 +33,7 @@ class RouteManager{
    
    case '/home_page':{
       return MaterialPageRoute(builder: (ctx){
-        return   HomePage();
+        return   const HomePage();
       });
     }
          
@@ -39,23 +42,41 @@ class RouteManager{
         return  LoginPage();
       });
     }
+    case '/nav':{
+      return MaterialPageRoute(builder: (ctx){
+        return  const MasterPage();
+      });
+    }
+
+    case '/pay_page':{
+      return MaterialPageRoute(builder: (ctx){
+        return  const PayPage();
+      });
+    }
 
 
     case '/detial_product':{
       return MaterialPageRoute(builder: (ctx){
-        return DetialProduct();
+        return const DetialProduct();
       });
     }
 
     case '/favorate_page':{
       return MaterialPageRoute(builder: (ctx){
-        return FavoratePage();
+        return const FavoratePage();
+      });
+    }
+
+    case '/products_of_category':{
+       String categoryName = settings.arguments as String;
+      return MaterialPageRoute(builder: (ctx){
+        return  ProductOfCategoryPage(categoryName: categoryName);
       });
     }
 
     case '/cart':{
       return MaterialPageRoute(builder: (ctx){
-        return CartPage();
+        return const CartPage();
       });
     }
 

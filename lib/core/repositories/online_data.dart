@@ -2,10 +2,8 @@ import 'dart:convert';
 
 
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helper/dion_connection.dart';
-import '../constants/api_routes.dart';
 import 'data_repo.dart';
 
 class OnlineDataRepo extends DataRepo{

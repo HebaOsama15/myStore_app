@@ -4,11 +4,10 @@ import 'package:e_commesce_app/core/feature/viewmodel/favorate_view_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
-import 'widgets.dart/circle_button.dart';
-import 'widgets.dart/image_sliver_appbar.dart';
+import '../../../component/widgets/count_quentity.dart';
+import '../widgets.dart/image_sliver_appbar.dart';
 
 class DetialProduct extends StatelessWidget {
   const DetialProduct({super.key});
@@ -44,7 +43,7 @@ class DetialProduct extends StatelessWidget {
                   ],
                   //حطي حق الكمية هنا
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: Colors.white,
                 ),
@@ -58,7 +57,7 @@ class DetialProduct extends StatelessWidget {
           ),
           TextSpan(
             text: favorateProvider.showFullText ? '' : '   (Show more)',
-            style: TextStyle(color: Colors.blue),
+            style: const TextStyle(color: Colors.blue),
             recognizer: TapGestureRecognizer()..onTap = () {
               favorateProvider.toggleShowFullText();
             },
@@ -66,23 +65,14 @@ class DetialProduct extends StatelessWidget {
         ],
       ),
     ),
-    Divider(color: Colors.white,),
+    const Divider(color: Colors.white,),
     Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text("Qty:",
         style: Theme.of(context).textTheme.titleLarge,),
-         SizedBox(width: 15,),
-         CircleButton(icon: Icons.add, onTap: (){
-          favorateProvider.incrementCounter();
-         },),
-         SizedBox(width: 15,),
-         Text("${favorateProvider.counter}",
-         style: Theme.of(context).textTheme.titleMedium,),
-         SizedBox(width: 15,),
-         Center(child: CircleButton(icon: Icons.remove, onTap: (){
-          favorateProvider.decrementCounter();
-         },)),      
+         const SizedBox(width: 15,),
+         CountQuentityWidget()     
       ],
     ),
    
@@ -112,9 +102,10 @@ class DetialProduct extends StatelessWidget {
         fontSize: 16.0
     );
               // Navigator.pushNamed(context, 'cart');
-            }, child: Text("add to card")),
+            }, child: const Text("add to card")),
           )),
       ),
     );
   }
 }
+

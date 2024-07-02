@@ -43,6 +43,9 @@ dependencies:
   intl: ^0.18.1
   flutter_spinkit: ^5.2.1
   flashy_tab_bar2: ^0.0.6
+  jwt_decoder: ^2.0.1
+  sqflite:
+  path:
 
 dev_dependencies:
   flutter_test:

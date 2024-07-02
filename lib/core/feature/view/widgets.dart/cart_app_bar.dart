@@ -3,17 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
-AppBar cartAppBar(BuildContext context) {
+AppBar cartAppBar(BuildContext context, int cartCount) {
     return AppBar(
       title: Text('Your Cart', 
       style: Theme.of(context).textTheme.titleLarge!.copyWith(color: primaryColor, fontSize: 30),),
-      actions: [
+      actions:  [
         Padding(
-          padding: const EdgeInsets.only(right:25.0),
+          padding:const EdgeInsets.only(right:25.0),
           child: Badge(
             backgroundColor: primaryColor,
-           label: Text("3"),
-            child: Icon(IconlyLight.buy, color: primaryColor,size: 30,)),
+           label: Text(cartCount.toString()),
+            child:const Icon(IconlyLight.buy, color: primaryColor,size: 30,)),
         )
       ],
       leading: Container(),

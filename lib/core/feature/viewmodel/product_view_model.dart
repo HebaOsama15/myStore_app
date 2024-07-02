@@ -1,3 +1,4 @@
+
 import 'package:e_commesce_app/core/constants/api_routes.dart';
 import 'package:e_commesce_app/core/feature/model/product_info_model.dart/product.dart';
 import 'package:e_commesce_app/core/repositories/data_repo.dart';
@@ -9,9 +10,16 @@ class ProdictViewModel with ChangeNotifier{
   
   List<Product> _products=[];
   List<Product>get products => _products;
+
+  List<String> _categories = [];
+  List<String>get categories => _categories;
+
+  List<Product> _productsCategory = [];
+  List<Product>get productsCategory => _productsCategory;
   
    ProdictViewModel(){
     getAllProducts();
+    getAllCategoreis();
    }
 
 Future<List<Product>> loadData(DataRepo repo, String source) async {
@@ -30,6 +38,52 @@ Future<List<Product>> loadData(DataRepo repo, String source) async {
     return [];
   }
 }
+
+Future<List<String>> loadCategotyData(DataRepo repo, String source) async {
+  try {
+    List<dynamic> d = await repo.getData(source: source) ;
+    print("category is $d");
+    List<String> allCategories = d.map((e) => e.toString()).toList();  
+    return allCategories;
+  } catch (e) {
+    print(" loadData Category error is $e");
+    return [];
+  }
+}
+
+
+
+ Future<List<String>> getAllCategoreis ()async{
+   _categories =  await loadCategotyData(OnlineDataRepo(), API_URL.CATEGORIES);
+ 
+ notifyListeners();
+  print("Products : $_products");
+ return categories;
+
+}
+
+// Future<List<Product>> getProductsOfCategory (String route)async{
+//   _productsCategory =  await loadData(OnlineDataRepo(), route);
+
+//   print("_productsCategory in getProductsOfCategory is : $_productsCategory ");
+//  notifyListeners();
+ 
+//  return _productsCategory;
+// }
+
+Future<List<Product>> getProductsOfCategory(String route) async {
+  try {
+    _productsCategory = await loadData(OnlineDataRepo(), route);
+    print("_productsCategory in getProductsOfCategory is : $_productsCategory");
+    notifyListeners();
+    return _productsCategory;
+  } catch (e) {
+    print("Error fetching products: $e");
+    rethrow;
+  }
+}
+
+
 
     
   //  Future<List<Product>>loadData(DataRepo repo,String source)async{
@@ -53,7 +107,7 @@ Future<List<Product>> loadData(DataRepo repo, String source) async {
    _products =  await loadData(OnlineDataRepo(), API_URL.PRODUCTS);
  
  notifyListeners();
-  print("Products : ${_products}");
+  print("Products : $_products");
  return _products;
 
 }

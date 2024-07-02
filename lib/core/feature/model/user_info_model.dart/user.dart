@@ -27,27 +27,27 @@ class User {
     username = json['username'];
     email = json['email'];
     password = json['password'];
-    name = json['name'] != null ? new Name.fromJson(json['name']) : null;
+    name = json['name'] != null ? Name.fromJson(json['name']) : null;
     phone = json['phone'];
     address =
-        json['address'] != null ? new Address.fromJson(json['address']) : null;
+        json['address'] != null ? Address.fromJson(json['address']) : null;
     iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    if (this.name != null) {
-      data['name'] = this.name!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['username'] = username;
+    data['email'] = email;
+    data['password'] = password;
+    if (name != null) {
+      data['name'] = name!.toJson();
     }
-    data['phone'] = this.phone;
-    if (this.address != null) {
-      data['address'] = this.address!.toJson();
+    data['phone'] = phone;
+    if (address != null) {
+      data['address'] = address!.toJson();
     }
-    data['__v'] = this.iV;
+    data['__v'] = iV;
     return data;
   }
 }

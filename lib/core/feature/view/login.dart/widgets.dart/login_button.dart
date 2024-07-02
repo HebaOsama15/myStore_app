@@ -1,5 +1,6 @@
 
 import 'package:dio/dio.dart';
+import 'package:e_commesce_app/core/constants/colors.dart';
 import 'package:e_commesce_app/core/feature/viewmodel/user_veiw_model.dart';
 import 'package:e_commesce_app/core/functions/loading_state.dart';
 import 'package:e_commesce_app/helper/shared_refrene_healper.dart';
@@ -8,25 +9,29 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../../repositories/online_data.dart';
 import '../../../model/user_info_model.dart/user.dart';
 
+// ignore: must_be_immutable
 class LoginButton extends StatelessWidget {
    LoginButton({
     super.key,
     required this.loginState,
     required this.logkey,
     required this.conList,
+    this.bgcolor,
+    this.title,
   });
 
   final LoginState loginState;
   final GlobalKey<FormState> logkey;
   final List<TextEditingController> conList;
   final UserViewModel userVM = UserViewModel();
-  
+  Color? bgcolor;
+  String? title;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.black, // Text color
+        backgroundColor: bgcolor ?? secondColor, // Text color
         elevation: 5, // Shadow elevation
         shape: RoundedRectangleBorder(
           borderRadius:
@@ -56,7 +61,7 @@ class LoginButton extends StatelessWidget {
                   "token", result["token"]);
     
               if (result["token"] != null) {
-                Navigator.pushNamed(context, '/home_page');
+                Navigator.pushNamed(context, '/nav');
           
             }
           }
@@ -64,6 +69,7 @@ class LoginButton extends StatelessWidget {
           loginState.setErrorMessage(e.toString());
           loginState.setLoading(false);
     
+          // ignore: use_build_context_synchronously
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -84,7 +90,7 @@ class LoginButton extends StatelessWidget {
               size: 30.0,
             )
           :
-           const Text("تسجيل الدخول"),
+            Text(title?? "Login"),
     );
   }
 }

@@ -1,9 +1,9 @@
 
 
 import 'package:e_commesce_app/core/constants/colors.dart';
-import 'package:e_commesce_app/core/feature/view/cart_page.dart';
-import 'package:e_commesce_app/core/feature/view/favorate_page.dart';
-import 'package:e_commesce_app/core/feature/view/home_page.dart';
+import 'package:e_commesce_app/core/feature/view/pages/cart_page.dart';
+import 'package:e_commesce_app/core/feature/view/pages/favorate_page.dart';
+import 'package:e_commesce_app/core/feature/view/pages/home_page.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
@@ -31,9 +31,9 @@ class _MasterPageState extends State<MasterPage> {
     
     List<Widget>screens=[
 
-     HomePage(),
-     CartPage(),
-     FavoratePage(),
+     const HomePage(),
+     const CartPage(),
+     const FavoratePage(),
      ProfilePage(),
      
    ];
