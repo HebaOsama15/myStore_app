@@ -1,11 +1,14 @@
   import 'package:e_commesce_app/core/constants/colors.dart';
+import 'package:e_commesce_app/core/feature/viewmodel/user_veiw_model.dart';
 import 'package:e_commesce_app/core/functions/get_user_info.dart';
 import 'package:e_commesce_app/helper/shared_refrene_healper.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 
 AppBar homePageAppBar(BuildContext context) {
   // userInfo.getUserInfoByToken;
+  UserViewModel userProvider = Provider.of<UserViewModel>(context);
     return AppBar(
       toolbarHeight: MediaQuery.of(context).size.height * 0.1,
       backgroundColor: primaryColor,
@@ -27,9 +30,9 @@ AppBar homePageAppBar(BuildContext context) {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Welcom ${UserInfo.name??"User"}",
+          Text("${userProvider.userApp.name?.firstname??"User"} ${userProvider.userApp.name?.lastname??"App"} ",
           style: Theme.of(context).textTheme.titleLarge,),
-          Text("Have a nice day?",
+          Text("${userProvider.userApp.address?.city??""} - ${userProvider.userApp.address?.street}",
           style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white60),),
         ],
       ),

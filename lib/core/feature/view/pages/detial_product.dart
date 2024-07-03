@@ -1,17 +1,31 @@
 import 'package:e_commesce_app/core/constants/colors.dart';
 import 'package:e_commesce_app/core/feature/model/product_info_model.dart/product.dart';
+import 'package:e_commesce_app/core/feature/model/product_info_model.dart/product_cart.dart';
+import 'package:e_commesce_app/core/feature/viewmodel/cart_model_view.dart';
 import 'package:e_commesce_app/core/feature/viewmodel/favorate_view_model.dart';
+import 'package:e_commesce_app/core/repositories/online_data.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../../component/widgets/count_quentity.dart';
+import '../../model/product_info_model.dart/cart.dart';
 import '../widgets.dart/image_sliver_appbar.dart';
 
-class DetialProduct extends StatelessWidget {
+class DetialProduct extends StatefulWidget {
   const DetialProduct({super.key});
-  
+
+  @override
+  State<DetialProduct> createState() => _DetialProductState();
+}
+
+class _DetialProductState extends State<DetialProduct> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Provider.of<CartViewModel>(context,listen: false).getCartByUser();
+  // }
   @override
   Widget build(BuildContext context) {
         final favorateProvider = Provider.of<FavorateModelView>(context);
@@ -19,7 +33,10 @@ class DetialProduct extends StatelessWidget {
     final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final Product productPass = args['argument'];
-    print("Quetion pass : ${productPass.title}");
+    print("product pass : ${productPass.title}");
+
+    CartViewModel cartProvider = Provider.of<CartViewModel>(context);
+
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -72,7 +89,7 @@ class DetialProduct extends StatelessWidget {
         Text("Qty:",
         style: Theme.of(context).textTheme.titleLarge,),
          const SizedBox(width: 15,),
-         CountQuentityWidget()     
+         CountQuentityWidget(quentity:favorateProvider.counter ,)     
       ],
     ),
    
@@ -90,8 +107,26 @@ class DetialProduct extends StatelessWidget {
           height: MediaQuery.of(context).size.height *0.09,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: ElevatedButton(onPressed: (){
-              //عقب عربيه ذا و خليه يضيف للسلة من حق صدق
+            child: ElevatedButton(onPressed: () async{
+            
+                try {
+                  List<ProductCart>productCartQty = cartProvider.carts[0].products??[];
+              List<ProductCart>list = [];
+              list.addAll(productCartQty);
+              print("=============================");
+              print("product cart 1 = $list");
+            ProductCart productCart = ProductCart(
+                 productId: productPass.id,
+                 quantity: favorateProvider.counter
+            );
+            print("q = ${favorateProvider.counter}");
+              list.add(productCart);
+              print("product cart 2 = $list");
+            Cart cart = Cart(
+              products: list
+            ) ;
+         Map<String, dynamic>  result = await cartProvider.editCart(OnlineDataRepo(), cart);
+            print("resut is : $result");
               Fluttertoast.showToast(
         msg: "Added to Cart done",
         toastLength: Toast.LENGTH_SHORT,
@@ -101,6 +136,18 @@ class DetialProduct extends StatelessWidget {
         textColor: primaryColor,
         fontSize: 16.0
     );
+                } catch (e) {
+                  print("error is $e");
+                  Fluttertoast.showToast(
+                  msg: "Field to Added Cart",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 2,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+                }
               // Navigator.pushNamed(context, 'cart');
             }, child: const Text("add to card")),
           )),

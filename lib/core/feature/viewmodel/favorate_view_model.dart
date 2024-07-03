@@ -23,10 +23,10 @@ class FavorateModelView extends ChangeNotifier {
   void toggleButtonColor(Product product) {
     //  icon == IconlyLight.heart ? IconlyBold.heart : IconlyLight.heart;
      if (icon == IconlyLight.heart) {
-       IconlyBold.heart;
+      icon = IconlyBold.heart;
        addFavProduct(LocalProductsRepo(), product);
      } else {
-       IconlyLight.heart;
+      icon = IconlyLight.heart;
        deleteFavProduct(LocalProductsRepo(), product);
      }
     notifyListeners(); 
@@ -54,7 +54,7 @@ class FavorateModelView extends ChangeNotifier {
   }
 
   Future<List<Product>>fetchProducts(DataRepo productsRepo,String source)async{
-    List<dynamic> products=await productsRepo.getData(source: source);
+    List<dynamic> products=await productsRepo.getListData(source: source);
 
     print("products is $products");
 

@@ -1,3 +1,4 @@
+
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../helper/shared_refrene_healper.dart';
@@ -16,6 +17,7 @@ class UserInfo {
    id = decodedToken['sub'];
    iat = decodedToken['iat'];
    print("JwtDecoder.decode(yourToken) is$decodedToken");
-
    }
+
+
 }

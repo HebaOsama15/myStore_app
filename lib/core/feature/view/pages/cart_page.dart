@@ -9,20 +9,14 @@ import 'package:provider/provider.dart';
 import '../widgets.dart/cart_app_bar.dart';
 import '../widgets.dart/cart_item.dart';
 
-class CartPage extends StatefulWidget {
-  const CartPage({super.key});
-
-  @override
-  State<CartPage> createState() => _CartPageState();
-}
-
-class _CartPageState extends State<CartPage> {
-  @override
-  void initState() {
-    Provider.of<CartViewModel>(context,listen: false).getProductsInCartByUser('${API_URL.CART_OF_USER}/${UserInfo.id}');
-    print("cart url is : ${API_URL.CART_OF_USER}/${UserInfo.id}");
-    super.initState();
-  }
+// ignore: use_key_in_widget_constructors
+class CartPage extends StatelessWidget {
+  
+  // void initState() {
+  //   Provider.of<CartViewModel>(context,listen: false).getProductsInCartByUser('${API_URL.CART_OF_USER}/${UserInfo.id}');
+  //   print("cart url is : ${API_URL.CART_OF_USER}/${UserInfo.id}");
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
     CartViewModel cartProvider = Provider.of<CartViewModel>(context);
@@ -66,7 +60,7 @@ class _CartPageState extends State<CartPage> {
                             itemCount: 3,
                             itemBuilder: (context, index){
                             Map<String, double> bill = {
-                                    "Sub Total": 384.00,
+                                    "Sub Total": cartProvider.getSubTotal()??0.0,
                                     "Discount": 6.00,
                                     "Total": 390
                             };

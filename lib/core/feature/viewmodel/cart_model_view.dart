@@ -5,28 +5,30 @@ import 'package:e_commesce_app/core/repositories/data_repo.dart';
 import 'package:e_commesce_app/core/repositories/online_data.dart';
 import 'package:flutter/material.dart';
 
+import '../../functions/get_user_info.dart';
 import '../model/product_info_model.dart/cart.dart';
 import '../model/product_info_model.dart/product_cart.dart';
 
 class CartViewModel with ChangeNotifier{
   
-  
+  //ذي فيها بيانات السلة الخاصة بمستخدم معين
   List<Cart> _carts=[];
   List<Cart>get carts => _carts;
   
-  List<Product> _productsInCart = [];
+  //ذي فيها بيانات المنتجات الموجودة في السلة
+  final List<Product> _productsInCart = [];
   List<Product>get productsInCart => _productsInCart;
   
   
    CartViewModel(){
-    // getAllCarts();
-    
+    // getAllCarts(); 
+    getCartByUser();
     getProductsInCart();
    }
 
 Future<List<Cart>> loadData(DataRepo repo, String source) async {
   try {
-    List<dynamic> d = await repo.getData(source: source) ;
+    List<dynamic> d = await repo.getListData(source: source) ;
     print("d is $d");
     List<Cart> allCarts = d.map((e) => Cart.fromJson(e)).toList();
     
@@ -48,9 +50,10 @@ Future<List<Cart>> loadData(DataRepo repo, String source) async {
 
 // }
 
-Future<List<Cart>> getProductsInCartByUser(String route) async {
+//هاذي عشان تجيب السلة حق المستخدم الحالي
+Future<List<Cart>> getCartByUser() async {
   try {
-    _carts = await loadData(OnlineDataRepo(), route);
+    _carts = await loadData(OnlineDataRepo(), "${API_URL.CART_OF_USER}/${UserInfo.id}");
     print("carts in getProductsInCartByUser is : $_carts");
     notifyListeners();
     return _carts;
@@ -60,28 +63,26 @@ Future<List<Cart>> getProductsInCartByUser(String route) async {
   }
 }
 
+//هاذي عشان تجيب المنتجات الي داخل السلة
  Future<List<Product> > getProductsInCart()async{
-  // ProdictViewModel p =ProdictViewModel()  ;
   ProdictViewModel p =ProdictViewModel();
   List<Product> allProducts =await p.getAllProducts();
   // List<Product> allProductInCart =await getProductsInCart();
-  print(" is :p.allProducts : ${allProducts} ");
-  // print(" is :p.products : ${allProductInCart} ");
+  print(" is :p.allProducts : $allProducts ");
+  print(" is :p.products : ${_carts} ");
   if (_carts.isNotEmpty) {
     for (Product product in allProducts) {
-    for (ProductCart cart in carts[0].products!) {
+    for (ProductCart cart in _carts[0].products!) {
       if (product.id == cart.productId) {
+    //المشكلة هنا اعتقد انها تحتاج setstate
         _productsInCart.add(product);
       }
     }
   }
-  }
+  }else { print("لستة الكارت ثقيلة الدم فاضية علها الحوش");}
   print("_productsInCart is $_productsInCart");
-  // for (int num in p.products) {
-  //   if (list2.contains(num)) {
-  //     list3.add(num);
-  //   }
-  // }
+
+  notifyListeners();
   return _productsInCart;
 }
 
@@ -100,33 +101,51 @@ Future<List<Cart>> getProductsInCartByUser(String route) async {
 
 // }
    
-   Future<Map<String,dynamic>>addCart(DataRepo repo,Cart Cart)async{
+   Future<Map<String,dynamic>>addCart(DataRepo repo,Cart cart)async{
     print("inside addTrip trip is $carts");
-   Map<String,dynamic>feedback=await repo.postData(Cart.toJson(),API_URL.CART);
-   _carts.add(Cart);
+   Map<String,dynamic>feedback=await repo.postData(cart.toJson(),API_URL.CART);
+   _carts.add(cart);
    print("feedback is :$feedback" );
    return feedback;
 
   }
-
-//   static getshared()async{
-  
-//    SharedPrefsHelper.init();
-
-//     phoneNumber = SharedPrefsHelper.getString("phone_number")?? "قم بادخال رقم هاتفك";
-//     name = SharedPrefsHelper.getString("name")?? "قم بادخال اسمك";
-//     id = SharedPrefsHelper.getInt("id");
-//     role_type = SharedPrefsHelper.getString("roles");
-//     token = SharedPrefsHelper.getString("token")?? "قم بإنشاء حساب";
-// }
-    
-
 
 
 deleteCart(DataRepo repo, Cart cart) async {
    await repo.deleteData({"id": cart.id}, API_URL.CART);
    _carts.remove(Cart);
    notifyListeners();
+}
+
+Future<Map<String,dynamic>>editCart(DataRepo repo, Cart cart)async{
+
+try {
+  Map<String,dynamic> data = await repo.putData(cart.toJson(), '${API_URL.CART}/${cart.id}');
+print("edit data is $data");
+notifyListeners();
+return data;
+
+} catch (e) {
+  print("Error fetching products: $e");
+    rethrow;
+}
+}
+
+double? getSubTotal(){
+double subTotal = 0.0;
+     
+    for (ProductCart cart in _carts[0].products!) {
+      for (Product product in _productsInCart) {
+      if (product.id == cart.productId) {
+        double qty = cart.quantity as double;
+        subTotal += product.price! * qty;
+      }
+    }
+  }
+print("sub total = $subTotal");
+notifyListeners();
+return subTotal;
+ 
 }
 
 }

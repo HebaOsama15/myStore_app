@@ -1,12 +1,14 @@
 import 'package:e_commesce_app/core/component/widgets/count_quentity.dart';
 import 'package:e_commesce_app/core/component/widgets/custom_container.dart';
 import 'package:e_commesce_app/core/constants/colors.dart';
-import 'package:e_commesce_app/core/feature/model/product_info_model.dart/product.dart';
-import 'package:e_commesce_app/core/feature/viewmodel/product_cart_model_view.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../../../repositories/online_data.dart';
+import '../../model/product_info_model.dart/cart.dart';
+import '../../model/product_info_model.dart/product_cart.dart';
 import '../../viewmodel/cart_model_view.dart';
 
 class CartItem extends StatelessWidget {
@@ -37,59 +39,83 @@ class CartItem extends StatelessWidget {
             itemCount: cartProvider.productsInCart.length,
             itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: InkWell(
+                onTap: () {
+              Navigator.pushNamed(
+                  context,
+                  '/detial_product',
+                  arguments: {'argument': cartProvider.productsInCart[index]},
+                );
+            },
+                child: 
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading:CustomDownContainer(
+                            width: 60,
+                            height: 100,
+                            isImage: true,
+                            image: cartProvider.productsInCart[index].image,
+                            
+                          ), 
+                title:Flexible(
+                                fit: FlexFit.tight,
+                                child: Text(
+                                  '${cartProvider.productsInCart[index].title}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(color: primaryColor),
+                                      softWrap: true,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                ),
+                              ), 
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        CustomDownContainer(
-                          width: 60,
-                          height: 70,
-                          isImage: false,
-                          // image: cartProvider.carts[index],
-                          
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${cartProvider.productsInCart[index].title}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(color: primaryColor),
-                            ),
-                            Text(
-                              '50\$',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(color: primaryColor),
-                            ),
-                            CountQuentityWidget(
-                              color: Colors.black54,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                            onPressed: () {/*delete from cart here */},
-                            icon: const Icon(
-                              IconlyLight.delete,
-                              color: secondColor,
-                            ))
-                      ],
-                    )
-                  ]),
+                    Text(
+                                '${cartProvider.productsInCart[index].price}\$',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(color: primaryColor),
+                              ),
+                              CountQuentityWidget(
+                                color: Colors.black54,
+                                quentity: cartProvider.carts[0].products![index].quantity,
+                              )
+                  ],
+                ),
+                trailing: IconButton(
+                              onPressed: () async{
+                                List<ProductCart>productCartQty = cartProvider.carts[0].products??[];
+              List<ProductCart>list = [];
+              list.addAll(productCartQty);
+              print("=============================");
+              print("product cart 1 = $list");
+            ProductCart productCart = ProductCart(
+                 productId: cartProvider.productsInCart[index].id,
+                 quantity: 0
+                //  favorateProvider.counter
+            );
+            // print("q = ${favorateProvider.counter}");
+              list.remove(productCart);
+              print("product cart 2 = $list");
+            Cart cart = Cart(
+              products: list
+            ) ;
+         Map<String, dynamic>  result = await cartProvider.editCart(OnlineDataRepo(), cart);
+            print("resut is : $result");
+              
+                              },
+                              icon: const Icon(
+                                IconlyLight.delete,
+                                color: secondColor,
+                              ))
+                )
+
+                
+              ),
             ),
           ),
         ));

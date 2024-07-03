@@ -1,8 +1,13 @@
 import 'package:e_commesce_app/core/constants/api_routes.dart';
-import 'package:e_commesce_app/core/feature/model/product_info_model.dart/product.dart';
+import 'package:e_commesce_app/core/constants/colors.dart';
 import 'package:e_commesce_app/core/feature/viewmodel/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../component/widgets/custom_container.dart';
+import '../widgets.dart/catrgories_section.dart';
+import '../widgets.dart/list_product_section.dart';
+import '../widgets.dart/profile_appbar.dart';
 
 // ignore: must_be_immutable
 class ProductOfCategoryPage extends StatefulWidget {
@@ -23,28 +28,23 @@ class _ProductOfCategoryPageState extends State<ProductOfCategoryPage> {
       // _loadProductsOfCategory();
     super.initState();
   }
-  //  Future<void> _loadProductsOfCategory() async {
-  //   _products = await Provider.of<ProdictViewModel>(context, listen: false)
-  //       .getProductsOfCategory('${API_URL.PRODUCT_CATEGORY}/${widget.categoryName}');
-  //       print("route is: ${API_URL.PRODUCT_CATEGORY}/${widget.categoryName}");
-  //       print("products lienth is : ${_products.length} ");
-  //   setState(() {});
-  // }
+ 
   @override
   Widget build(BuildContext context) {
  
     ProdictViewModel productProvider = Provider.of<ProdictViewModel>(context);
     return Scaffold(
-       body: ListView.builder(
-        itemCount:
-        // _products.length,
-         productProvider.productsCategory.length,
-        itemBuilder: (ctx, index){
-          
-        return ListTile(
-          title: Text(productProvider.productsCategory[index].title??""),
-        );
-       }),
+      appBar: customAppbar(context, title: "${widget.categoryName.toUpperCase()}", isProfile: false),
+       body: Padding(
+         padding:const EdgeInsets.only(left:15, right: 15,  bottom: 20),
+         child: ListView(
+           children: [
+            const CategoreisSection(),
+             ListProductSection(productList: productProvider.productsCategory),
+             SizedBox(height: 50,)
+           ],
+         ),
+       ),
     );
   }
 }

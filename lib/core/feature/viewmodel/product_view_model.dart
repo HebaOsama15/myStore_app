@@ -16,6 +16,9 @@ class ProdictViewModel with ChangeNotifier{
 
   List<Product> _productsCategory = [];
   List<Product>get productsCategory => _productsCategory;
+
+  List<Product> _resultSearchProduct = [];
+  List<Product>get resultSearchProduct => _resultSearchProduct;
   
    ProdictViewModel(){
     getAllProducts();
@@ -24,7 +27,7 @@ class ProdictViewModel with ChangeNotifier{
 
 Future<List<Product>> loadData(DataRepo repo, String source) async {
   try {
-    List<dynamic> d = await repo.getData(source: source) ;
+    List<dynamic> d = await repo.getListData(source: source) ;
     print("d is $d");
     List<Product> allProducts = d.map((e) => Product.fromJson(e)).toList();
     // Map<String, dynamic> data = await repo.getData(source: source) ;
@@ -41,7 +44,7 @@ Future<List<Product>> loadData(DataRepo repo, String source) async {
 
 Future<List<String>> loadCategotyData(DataRepo repo, String source) async {
   try {
-    List<dynamic> d = await repo.getData(source: source) ;
+    List<dynamic> d = await repo.getListData(source: source) ;
     print("category is $d");
     List<String> allCategories = d.map((e) => e.toString()).toList();  
     return allCategories;
@@ -83,6 +86,16 @@ Future<List<Product>> getProductsOfCategory(String route) async {
   }
 }
 
+List<Product> filterTProducts(String title) {
+    // resultFilterList.clear();
+ _resultSearchProduct = _products.where((product) {
+    return product.title!.toLowerCase().contains(title.toLowerCase()) ||
+        product.category!.toLowerCase().contains(title.toLowerCase());
+  }).toList();
+
+   notifyListeners();
+  return _resultSearchProduct;
+}
 
 
     

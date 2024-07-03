@@ -7,18 +7,26 @@ class LoginTextFeild extends StatelessWidget {
     super.key,
     required this.controller,
     required this.lable,
-    this.validator
+    this.validator,
+    this.onTap,
+    this.readOnly,
+    this.onChanged,
   });
   final TextEditingController controller;
   final String lable;
   final String? Function(String?)? validator;
-
+  final void Function()? onTap;
+  final void Function(String)? onChanged;
+  final bool? readOnly;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       validator: validator,
+      readOnly: readOnly?? false,
+      onTap: onTap,
+      onChanged: onChanged,
       decoration: InputDecoration(
         // hintText: 'ُEnter $lable',
         label: Padding(

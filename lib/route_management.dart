@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'core/errors/eror404.dart';
 import 'core/feature/view/login.dart/login_page.dart';
 import 'core/feature/view/pages/products_of_category_page.dart';
+import 'core/feature/view/pages/search_page.dart';
 import 'core/feature/view/pages/splash.dart';
 
 
@@ -74,9 +75,15 @@ class RouteManager{
       });
     }
 
+    case '/search_page':{
+      return MaterialPageRoute(builder: (ctx){
+        return  SearchPage();
+      });
+    }
+
     case '/cart':{
       return MaterialPageRoute(builder: (ctx){
-        return const CartPage();
+        return  CartPage();
       });
     }
 

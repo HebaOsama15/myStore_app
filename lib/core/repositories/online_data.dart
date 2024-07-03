@@ -10,7 +10,7 @@ class OnlineDataRepo extends DataRepo{
   @override
   // Future<Map<String,dynamic>>
   Future<List<dynamic>>
-  getData({required String source, List<String>? columns}) async{
+  getListData({required String source, List<String>? columns}) async{
     try{
       Response<String> serverResponse=await DioConnection.connect().get(source);
       //Response<String> serverResponse=await Dio().get(source);
@@ -143,5 +143,17 @@ try {
   return {};
 }
 }
+
+  @override
+  Future<Map<String, dynamic>> getMapData({required String source, List<String>? columns})async {
+    try{
+      Response<String> serverResponse=await DioConnection.connect().get(source);
+      Map<String,dynamic> content=jsonDecode(serverResponse.data!);
+      return content;
+    }catch(ex){
+
+      return {};
+    }
+  }
 
 }

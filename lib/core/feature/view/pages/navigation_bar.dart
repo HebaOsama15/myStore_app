@@ -32,7 +32,7 @@ class _MasterPageState extends State<MasterPage> {
     List<Widget>screens=[
 
      const HomePage(),
-     const CartPage(),
+      CartPage(),
      const FavoratePage(),
      ProfilePage(),
      

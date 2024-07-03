@@ -10,13 +10,13 @@ class LocalProductsRepo extends DataRepo {
   Future<Map<String, dynamic>> deleteData(Map<String, dynamic> dataToSend, String source)async {
     DBManger dbManger = DBManger();
   int id = dataToSend['id'] as int;
-  
+
   int rowsAffected = await dbManger.delete("DELETE FROM ${DBManger.TBL_PRODUCTS} WHERE ${DBManger.COL_ID} = $id");
   return {'rowsAffected': rowsAffected};
   }
   
   @override
-  Future<List> getData({required String source, List<String>? columns})async {
+  Future<List> getListData({required String source, List<String>? columns})async {
     DBManger dbManger = DBManger();
     return await dbManger.fetch("select * from ${DBManger.TBL_PRODUCTS}");
   }
@@ -36,6 +36,12 @@ class LocalProductsRepo extends DataRepo {
   
   @override
   Future<Map<String, dynamic>> putData(Map<String, dynamic> dataToSend, String source) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<Map<String, dynamic>> getMapData({required String source, List<String>? columns}) {
+    // TODO: implement getMapData
     throw UnimplementedError();
   }
 }

@@ -48,6 +48,13 @@ class DBManger {
     {String? mainTable_id = null, List<Map<String, dynamic>>? sub_rows = null}) async {
   Database localDB = await dbObject;
 
+  // Check if the row already exists in the table
+  int? existingId = await checkIfRowExists(tbl_name, row);
+  if (existingId != null) {
+    // The row already exists, return the existing id
+    return existingId;
+  }
+
   // Remove the 'id' key from the row map if it's present
   if (row.containsKey(DBManger.COL_ID)) {
     row.remove(DBManger.COL_ID);
@@ -61,20 +68,44 @@ class DBManger {
 
   return id;
 }
-  // Future<int> insert(String tbl_name, Map<String, dynamic> row,
-  //     {
-  //       String? mainTable_id = null,
-  //     List<Map<String, dynamic>>? sub_rows = null}) async {
-  //   int id = -1;
 
-  //   Database localDB = await dbObject;
+Future<int?> checkIfRowExists(String tbl_name, Map<String, dynamic> row) async {
+  Database localDB = await dbObject;
 
-  //   id = await localDB.insert(tbl_name, row);
-  //   sub_rows!.forEach((element) {
-  //     id = element[mainTable_id!];
-  //   });
-  //   return await id;
-  // }
+  // Build the WHERE clause based on the row data
+  String whereClause = row.keys.map((key) => '$key = ?').join(' AND ');
+  List<Object?> whereArgs = row.values.toList();
+
+  // Query the table to check if the row already exists
+  List<Map<String, dynamic>> result = await localDB.query(tbl_name,
+      where: whereClause, whereArgs: whereArgs);
+
+  if (result.isNotEmpty) {
+    // The row already exists, return the id
+    return result.first[DBManger.COL_ID] as int;
+  } else {
+    // The row doesn't exist, return null
+    return null;
+  }
+}
+//   Future<int> insert(String tbl_name, Map<String, dynamic> row,
+//     {String? mainTable_id = null, List<Map<String, dynamic>>? sub_rows = null}) async {
+//   Database localDB = await dbObject;
+
+//   // Remove the 'id' key from the row map if it's present
+//   if (row.containsKey(DBManger.COL_ID)) {
+//     row.remove(DBManger.COL_ID);
+//   }
+
+//   int id = await localDB.insert(tbl_name, row);
+
+//   sub_rows?.forEach((element) {
+//     element[mainTable_id!] = id;
+//   });
+
+//   return id;
+// }
+  
 
   /** delete from table */
   Future<int> delete(String sql) async {

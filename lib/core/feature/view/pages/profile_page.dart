@@ -1,102 +1,73 @@
 
 import 'package:e_commesce_app/core/component/widgets/ligon_text_feild.dart';
 import 'package:e_commesce_app/core/constants/colors.dart';
-import 'package:e_commesce_app/core/functions/get_user_info.dart';
+import 'package:e_commesce_app/core/feature/viewmodel/user_veiw_model.dart';
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../helper/shared_refrene_healper.dart';
 import '../../model/user_info_model.dart/user.dart';
+import '../widgets.dart/profile_appbar.dart';
 
 // ignore: must_be_immutable
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   List<String> listt = [
     "user name",
-    "iat",
+    "email",
+
   ];
+
+  // @override
+  // void initState() {
+  //       Provider.of<UserViewModel>(context,listen: false).getUserById('${API_URL.SIGNUP}/${UserInfo.id}');
+  //   super.initState();
+  // }
 
   List<TextEditingController> cons =
       List.generate(2, (index) => TextEditingController());
+
   @override
   Widget build(BuildContext context) {
  
-    // UserVM userProvider = Provider.of<UserVM>(context);
-    cons[0].text = UserInfo.name ?? "";
-    cons[1].text = UserInfo.iat.toString();
+    UserViewModel userProvider = Provider.of<UserViewModel>(context);
+   cons[0].text = userProvider.userApp.name?.firstname ?? "";
+    cons[1].text = userProvider.userApp.email?? "";
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          leading: Container(),
-          centerTitle: true,
-          title: Text(
-            "My Profile",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          actions: [
-            
-            IconButton(onPressed: (){
-        showDialog(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Are you sure to log out?',
-        style: Theme.of(context).textTheme.titleLarge!.copyWith(color: secondColor),),
-        
-        actions: <Widget>[
-          TextButton(
-            child: Text('Logout',
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(color: secondColor),),
-            onPressed: () {
-         
-              SharedPrefsHelper.removeString("token");
-           
-              Navigator.pushReplacementNamed(context, '/login');
-            },
-          ),
-          TextButton(
-            child: Text('Cancel',
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(color: secondColor),),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },);
-      }, icon: const Icon(IconlyLight.logout, color: Colors.white, size: 30,)),
-            const SizedBox(width: 20,),
-          ],
-        ),
+        appBar: customAppbar(context, title: "My Profile", isProfile: true),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 40),
           child: Column(
             children: [
-               Expanded(
+             const  Expanded(
                   flex: 1,
                   child: Center(
                     child: Stack(
                       alignment: Alignment.bottomRight,
                       children: [
-                      const  CircleAvatar(
+                        CircleAvatar(
                           radius: 50,
                           backgroundImage: AssetImage('assets/images/images-removebg-preview.png'),
                           // backgroundImage
                           //  child:f !=null?Image.file(f!):                
                           //  Image.network("assets/images/user_profile.jpg", fit: BoxFit.fill,),
                         ),
-                        InkWell(
-                              onTap: ()async{
-                              // f =await userProvider.chooseImage();
-                              },
-                              child:const CircleAvatar(
-                                backgroundColor: secondColor,
-                                radius: 15,
-                                child: Icon(IconlyLight.camera,color: Colors.white,size: 20,),
-                              ),
-                            ),
+                        // InkWell(
+                        //       onTap: ()async{
+                        //       // f =await userProvider.chooseImage();
+                        //       },
+                        //       child:const CircleAvatar(
+                        //         backgroundColor: secondColor,
+                        //         radius: 15,
+                        //         child: Icon(IconlyLight.camera,color: Colors.white,size: 20,),
+                        //       ),
+                        //     ),
                       ],
                     ),
                   )),
@@ -210,9 +181,9 @@ class ProfilePage extends StatelessWidget {
     );
   },
   child: const Text(
-    "حذف الحساب",
+    "delete an account",
     style: TextStyle(
-      fontFamily: 'Cairo',
+      fontFamily: 'Lato',
       fontSize: 16,
       color: Colors.red,
     ),
@@ -224,4 +195,6 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+
+  
 }

@@ -2,9 +2,9 @@
 
 
 
+import 'package:e_commesce_app/core/functions/get_user_info.dart';
 import 'package:e_commesce_app/helper/shared_refrene_healper.dart';
 import 'package:flutter/material.dart';
-
 import '../../constants/api_routes.dart';
 import '../../repositories/data_repo.dart';
 import '../../repositories/online_data.dart';
@@ -16,26 +16,27 @@ class UserViewModel with ChangeNotifier{
 
   List<User> _users=[];
   List<User>get users => _users;
+
+  User userApp = User();
   
    UserViewModel(){
     getAllUsers();
+    getUserById();
    }
 
     
   //  Future<List<User>>
-   loadData(DataRepo repo,String source)async{
-    //print(source);
-  //  try {
-  //    Map<String,dynamic>data=await repo.getData(source: source);
-  //  List<dynamic> d =data["data"];
-  //  List<User>allUsers=d.map((e) => User.fromJson(e)).toList();
+  Future<List<User>> loadData(DataRepo repo,String source)async{
+    try {
+    List<dynamic> d = await repo.getListData(source: source) ;
+    print("d is $d");
+    List<User> allUsers = d.map((e) => User.fromJson(e)).toList();
 
-  //  return allUsers;
-
-  //  } catch (e) {
-  //    print(" loadData User error is $e");
-  //    return [];
-  //  }
+    return allUsers;
+  } catch (e) {
+    print(" loadData users error is $e");
+    return [];
+  }
 
   }
    
@@ -68,17 +69,42 @@ class UserViewModel with ChangeNotifier{
    return feedback;
 
   }
-//   static getshared()async{
-  
-//    SharedPrefsHelper.init();
+  Future<User> loadSingleUser(DataRepo repo, String source) async {
+    //print(source);
+    try {
+      Map<String, dynamic> data = await repo.getMapData(source: source);
+      // List<dynamic> d = data["data"];
+      // print("the data is ${d}");
+      User user = User.fromJson(data);
+      print("Tracks is ${user.name}");
+      return user;
+    } catch (e) {
+      print(" loadData error Track is $e");
+    throw Exception('Failed to load user: $e');
+    }
+  }
 
-//     phoneNumber = SharedPrefsHelper.getString("phone_number")?? "قم بادخال رقم هاتفك";
-//     name = SharedPrefsHelper.getString("name")?? "قم بادخال اسمك";
-//     id = SharedPrefsHelper.getInt("id");
-//     role_type = SharedPrefsHelper.getString("roles");
-//     token = SharedPrefsHelper.getString("token")?? "قم بإنشاء حساب";
-// }
+ Future <User> getUserById() async {
+  try {
+   userApp = await loadSingleUser(OnlineDataRepo(), '${API_URL.SIGNUP}/${UserInfo.id}');
+    print("user in singleUserList is : $userApp");
+    notifyListeners();
+    return userApp;
+
+  } catch (e) {
+    print("Error fetching user: $e");
+    rethrow;
+  }
+ }
+
+
+
+  //  Future<void> _loadSingleUser(BuildContext context) async {
+  //   singleUserList = await Provider.of<UserViewModel>(context, listen: false)
+  //       .getUserById('${API_URL.SIGNUP}/${UserInfo.id}');
+  //       print("route is: ${API_URL.PRODUCT_CATEGORY}/${UserInfo.id}");
     
+  // }
 
 
 
