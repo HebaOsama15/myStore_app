@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
                   // const SizedBox(
                   //   height: 50,
                   // ),
-                  Image.asset("assets/images/my store logo.png"),
+                  Image.asset("assets/images/logo_size_invert.jpg"),
                   // const Spacer(),
                   LoginFeild(conList: conList),
                   Padding(

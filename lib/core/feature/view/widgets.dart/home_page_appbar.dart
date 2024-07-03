@@ -1,6 +1,5 @@
   import 'package:e_commesce_app/core/constants/colors.dart';
 import 'package:e_commesce_app/core/feature/viewmodel/user_veiw_model.dart';
-import 'package:e_commesce_app/core/functions/get_user_info.dart';
 import 'package:e_commesce_app/helper/shared_refrene_healper.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';

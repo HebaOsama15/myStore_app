@@ -111,27 +111,31 @@ try {
   @override
   Future<Map<String, dynamic>> putData(Map<String, dynamic> dataToSend, String source)async {
      Response<String> serverResponse = await DioConnection.connect().put(source, data: dataToSend);
-
+     print("put data in Online repo is : $dataToSend");
      try {
   if (serverResponse.statusCode == 200) {
     Map<String, dynamic> info = jsonDecode(serverResponse.data!);
-    if (info.containsKey("data")) {
-      Map<String, dynamic>? result = info["data"];
-
-      if (result != null && result.containsKey("id")) {
-        // Handle the successful response
-        print("ID is ${result["id"]}");
-        print("Name is ${result["name"]}");
-        print("Phone number is ${result["phone_number"]}");
-        // ... Handle other properties as needed
-      } else {
-        // Handle the case where "data" or "id" is missing
-        print("Missing 'data' or 'id' in the response");
-      }
-    } else {
-      // Handle the case where "data" is missing
-      print("Missing 'data' in the response");
-    }
+    print("info is : $info");
+    return info;
+    // if (info.containsKey("data")) {
+    //    print("info2  is : $info");
+    // //   Map<String, dynamic>? result = info;
+    // //  print("info result is : $result");
+    // //   if (result != null && result.containsKey("id")) {
+    // //     // Handle the successful response
+    // //     print("ID is ${result["id"]}");
+    // //     print("Name is ${result["name"]}");
+    // //     print("Phone number is ${result["phone_number"]}");
+    // //     // ... Handle other properties as needed
+    // //   } else {
+    // //     // Handle the case where "data" or "id" is missing
+    // //     print("Missing 'data' or 'id' in the response");
+    // //   }
+    // } else {
+    //   // Handle the case where "data" is missing
+    //   print("Missing 'data' in the response");
+    //   print("Error: ${serverResponse.statusCode}");
+    // }
   } else {
     // Handle the error case
     print("Error: ${serverResponse.statusCode}");

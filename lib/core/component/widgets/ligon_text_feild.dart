@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/colors.dart';
 
 class LoginTextFeild extends StatelessWidget {
   const LoginTextFeild({
@@ -27,6 +26,7 @@ class LoginTextFeild extends StatelessWidget {
       readOnly: readOnly?? false,
       onTap: onTap,
       onChanged: onChanged,
+      textAlign: TextAlign.justify,
       decoration: InputDecoration(
         // hintText: 'ُEnter $lable',
         label: Padding(
@@ -38,13 +38,14 @@ class LoginTextFeild extends StatelessWidget {
         ),
         fillColor: Colors.white,
         filled: true,
+        
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: secondColor.withOpacity(1),
-          ),
+          // borderSide: BorderSide(
+          //   color: secondColor.withOpacity(1),
+          // ),
           borderRadius: BorderRadius.circular(30),
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:e_commesce_app/core/feature/model/product_info_model.dart/produc
 import 'package:e_commesce_app/core/feature/model/product_info_model.dart/product_cart.dart';
 import 'package:e_commesce_app/core/feature/viewmodel/cart_model_view.dart';
 import 'package:e_commesce_app/core/feature/viewmodel/favorate_view_model.dart';
+import 'package:e_commesce_app/core/functions/get_user_info.dart';
 import 'package:e_commesce_app/core/repositories/online_data.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -122,10 +123,14 @@ class _DetialProductState extends State<DetialProduct> {
             print("q = ${favorateProvider.counter}");
               list.add(productCart);
               print("product cart 2 = $list");
+              int id = cartProvider.carts[0].id!;
             Cart cart = Cart(
+              id: id,
+              userId: UserInfo.id,
+              date: DateTime.now().toString(),
               products: list
             ) ;
-         Map<String, dynamic>  result = await cartProvider.editCart(OnlineDataRepo(), cart);
+         Map<String, dynamic>  result = await cartProvider.editCart(OnlineDataRepo(), cart, id);
             print("resut is : $result");
               Fluttertoast.showToast(
         msg: "Added to Cart done",

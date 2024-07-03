@@ -3,7 +3,7 @@ import 'package:path/path.dart';
 
 class DBManger {
   Database? _db;
-  String dbName = "mystore.db";
+  String dbName = "my_store.db";
   int dbVersion = 1;
 
   /** start table and columns for products table */
@@ -14,6 +14,7 @@ class DBManger {
   static const String COL_PRICE = "price";
   static const String COL_CATEGORY = "category";
   static const String COL_IMAGE = "image";
+  // static const String COL_ISFAV = "is_favorate";
 
   Future<Database> get dbObject async {
     print("db is null");
@@ -38,6 +39,7 @@ class DBManger {
       $COL_CATEGORY varchar(255) not null,
       $COL_IMAGE varchar(255) not null,
       $COL_PRICE double not null
+     
       )
       """);
     });
@@ -88,24 +90,7 @@ Future<int?> checkIfRowExists(String tbl_name, Map<String, dynamic> row) async {
     return null;
   }
 }
-//   Future<int> insert(String tbl_name, Map<String, dynamic> row,
-//     {String? mainTable_id = null, List<Map<String, dynamic>>? sub_rows = null}) async {
-//   Database localDB = await dbObject;
 
-//   // Remove the 'id' key from the row map if it's present
-//   if (row.containsKey(DBManger.COL_ID)) {
-//     row.remove(DBManger.COL_ID);
-//   }
-
-//   int id = await localDB.insert(tbl_name, row);
-
-//   sub_rows?.forEach((element) {
-//     element[mainTable_id!] = id;
-//   });
-
-//   return id;
-// }
-  
 
   /** delete from table */
   Future<int> delete(String sql) async {
@@ -117,5 +102,10 @@ Future<int?> checkIfRowExists(String tbl_name, Map<String, dynamic> row) async {
   Future<List<Map<String, dynamic>>> fetch(String sql) async {
     Database localDB = await dbObject;
     return localDB.rawQuery(sql);
+  }
+
+   Future<void> deleteAllData() async {
+    final db = await dbObject;
+    await db.delete(TBL_PRODUCTS);
   }
 }

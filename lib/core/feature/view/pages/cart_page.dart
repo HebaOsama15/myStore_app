@@ -62,7 +62,7 @@ class CartPage extends StatelessWidget {
                             Map<String, double> bill = {
                                     "Sub Total": cartProvider.getSubTotal()??0.0,
                                     "Discount": 6.00,
-                                    "Total": 390
+                                    "Total": cartProvider.applyDiscount(cartProvider.getSubTotal()??0) !=0?cartProvider.applyDiscount(cartProvider.getSubTotal()??0) : 0,
                             };
                             return Padding(
                               padding: const EdgeInsets.only(top:10.0, bottom: 10),

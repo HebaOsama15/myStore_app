@@ -11,7 +11,7 @@ class FavorateModelView extends ChangeNotifier {
     List<Product>get allFavprateProducts => _allFavprateProducts;
 
     bool showFullText = false;
-    IconData icon = IconlyLight.heart;
+    // IconData icon = IconlyLight.heart;
     int _counter = 1; 
     int get counter => _counter;
 
@@ -22,13 +22,29 @@ class FavorateModelView extends ChangeNotifier {
 //حق القلب يوم ينقلب حمر
   void toggleButtonColor(Product product) {
     //  icon == IconlyLight.heart ? IconlyBold.heart : IconlyLight.heart;
-     if (icon == IconlyLight.heart) {
-      icon = IconlyBold.heart;
-       addFavProduct(LocalProductsRepo(), product);
-     } else {
-      icon = IconlyLight.heart;
-       deleteFavProduct(LocalProductsRepo(), product);
-     }
+    //  if (icon == IconlyLight.heart) {
+    //   icon = IconlyBold.heart;
+    //    addFavProduct(LocalProductsRepo(), product);
+    //  } else {
+    //   icon = IconlyLight.heart;
+    //    deleteFavProduct(LocalProductsRepo(), product);
+    //  }
+   if (product.isFavorite ==null) {
+     product.isFavorite = false;
+      product.isFavorite = !product.isFavorite!;
+      if (product.isFavorite!) {
+        addFavProduct(LocalProductsRepo(), product);
+      } else {
+        deleteFavProduct(LocalProductsRepo(), product);
+      }
+   }else{
+     product.isFavorite = !product.isFavorite!;
+      if (product.isFavorite!) {
+        addFavProduct(LocalProductsRepo(), product);
+      } else {
+        deleteFavProduct(LocalProductsRepo(), product);
+      }
+   }
     notifyListeners(); 
   }
 

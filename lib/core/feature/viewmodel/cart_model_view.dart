@@ -69,12 +69,12 @@ Future<List<Cart>> getCartByUser() async {
   List<Product> allProducts =await p.getAllProducts();
   // List<Product> allProductInCart =await getProductsInCart();
   print(" is :p.allProducts : $allProducts ");
-  print(" is :p.products : ${_carts} ");
-  if (_carts.isNotEmpty) {
+  print(" is :p.products : ${carts} ");
+  if (carts.isNotEmpty) {
     for (Product product in allProducts) {
-    for (ProductCart cart in _carts[0].products!) {
+    for (ProductCart cart in carts[0].products!) {
       if (product.id == cart.productId) {
-    //المشكلة هنا اعتقد انها تحتاج setstate
+        print("_carts.isNotEmpty = $cart");
         _productsInCart.add(product);
       }
     }
@@ -102,7 +102,7 @@ Future<List<Cart>> getCartByUser() async {
 // }
    
    Future<Map<String,dynamic>>addCart(DataRepo repo,Cart cart)async{
-    print("inside addTrip trip is $carts");
+    print("inside addCart cart is $carts");
    Map<String,dynamic>feedback=await repo.postData(cart.toJson(),API_URL.CART);
    _carts.add(cart);
    print("feedback is :$feedback" );
@@ -117,10 +117,12 @@ deleteCart(DataRepo repo, Cart cart) async {
    notifyListeners();
 }
 
-Future<Map<String,dynamic>>editCart(DataRepo repo, Cart cart)async{
+Future<Map<String,dynamic>>editCart(DataRepo repo, Cart cart, int cartId)async{
 
 try {
-  Map<String,dynamic> data = await repo.putData(cart.toJson(), '${API_URL.CART}/${cart.id}');
+  print("usl is : ${API_URL.CART}/${cartId}");
+  print("data to send is : ${cart.toJson()}");
+  Map<String,dynamic> data = await repo.putData(cart.toJson(), '${API_URL.CART}/${cartId}');
 print("edit data is $data");
 notifyListeners();
 return data;
@@ -133,19 +135,28 @@ return data;
 
 double? getSubTotal(){
 double subTotal = 0.0;
-     
-    for (ProductCart cart in _carts[0].products!) {
-      for (Product product in _productsInCart) {
-      if (product.id == cart.productId) {
-        double qty = cart.quantity as double;
-        subTotal += product.price! * qty;
-      }
-    }
+  for (Product product in productsInCart) {
+    int quantity = getProductQuantity(product.id!);
+    subTotal += product.price! * quantity;
   }
 print("sub total = $subTotal");
-notifyListeners();
+// notifyListeners();
 return subTotal;
  
+}
+int getProductQuantity(int productId) {
+  for (ProductCart productCart in _carts.first.products!) {
+    if (productCart.productId == productId) {
+      return productCart.quantity!;
+    }
+  }
+  return 0;
+}
+
+double applyDiscount(double total) {
+  double discountRate = 0.06; 
+  return total - (total * discountRate);
+  
 }
 
 }

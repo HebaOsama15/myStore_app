@@ -8,6 +8,7 @@ class Product {
   String? description;
   String? category;
   String? image;
+  bool? isFavorite = false;
   // Rating? rating;
 
   Product(
@@ -17,6 +18,7 @@ class Product {
       this.description,
       this.category,
       this.image,
+      this.isFavorite = false,
       // this.rating
       }
       );
@@ -28,6 +30,7 @@ class Product {
     description = json['description'];
     category = json['category'];
     image = json['image'];
+    isFavorite = json['isFavorite'] ;
     // rating = json['rating'] != null ?  Rating.fromJson(json['rating']) : null;
     // rating =
     //     json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
@@ -41,6 +44,7 @@ class Product {
     data['description'] = description;
     data['category'] = category;
     data['image'] = image;
+    data['isFavorite'] = isFavorite;
 
     // if (rating != null) {
     //   data['user'] = rating!.toJson();

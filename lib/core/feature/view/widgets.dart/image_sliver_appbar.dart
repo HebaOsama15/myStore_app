@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 
 import '../../../constants/colors.dart';
 import '../../model/product_info_model.dart/product.dart';
@@ -24,7 +25,9 @@ class ImageSilverAppbar extends StatelessWidget {
       leading: IconButton(icon: const Icon(Icons.arrow_back, color: primaryColor,size: 30,), onPressed: (){Navigator.pop(context);},),
       actions: [
         IconButton(onPressed: ()=> favorateProvider.toggleButtonColor(productPass),
-         icon: Icon(favorateProvider.icon, color: Colors.red, 
+         icon: Icon(
+          // productPass.isFavorite ? IconlyBold.heart : 
+          IconlyLight.heart, color: Colors.red, 
         size: 30,))
       ],
       shape:const RoundedRectangleBorder(
